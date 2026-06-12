@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="theme-color" content="#0E0E0C" />
+<title>kaizen</title>
+<link rel="stylesheet" href="style.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div id="app">
+
+  <section id="screen-welcome" class="screen welcome-screen">
+    <div class="welcome-wrap">
+      <div class="welcome-kanji">改善</div>
+      <div class="welcome-text">welcome back, <span id="welcome-name">friend</span></div>
+    </div>
+  </section>
+
+  <section id="screen-intro" class="screen">
+    <div class="intro-wrap">
+      <div class="intro-kanji">改善</div>
+
+      <div class="intro-slides">
+        <div class="intro-slide active" data-slide="0">
+          <div class="intro-art">
+            <svg viewBox="0 0 200 120" width="160" height="96" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M10 110 L50 50 L70 70 L90 40 L120 80 L150 30 L190 110 Z" />
+              <circle cx="150" cy="30" r="3" fill="currentColor"/>
+              <path d="M10 110 L190 110" opacity="0.4"/>
+              <path d="M25 110 L35 95 M45 110 L55 85 M100 110 L108 100" opacity="0.3"/>
+            </svg>
+          </div>
+          <h1>one step</h1>
+          <p>small daily steps. real progress. nothing fake.</p>
+        </div>
+
+        <div class="intro-slide" data-slide="1">
+          <div class="intro-art">
+            <svg viewBox="0 0 200 120" width="160" height="96" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="100" cy="75" r="22" />
+              <path d="M100 53 L100 30 M115 35 L125 20 M85 35 L75 20 M100 75 L100 55 M100 75 L115 75" />
+              <path d="M40 110 L160 110" opacity="0.4"/>
+              <path d="M30 95 C40 95 50 95 60 95 M140 95 C150 95 160 95 170 95" opacity="0.4"/>
+            </svg>
+          </div>
+          <h1>focus, measured</h1>
+          <p>xp is earned by the time you focus — not by what you claim.</p>
+        </div>
+
+        <div class="intro-slide" data-slide="2">
+          <div class="intro-art">
+            <svg viewBox="0 0 200 120" width="160" height="96" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M40 40 Q40 30 50 30 L90 30 Q100 30 100 40 L100 95 L50 95 Q40 95 40 85 Z"/>
+              <path d="M100 40 Q100 30 110 30 L150 30 Q160 30 160 40 L160 85 Q160 95 150 95 L100 95"/>
+              <path d="M55 50 L85 50 M55 65 L85 65 M55 80 L85 80" opacity="0.5"/>
+              <path d="M115 50 L145 50 M115 65 L145 65 M115 80 L145 80" opacity="0.5"/>
+              <circle cx="100" cy="30" r="2" fill="currentColor"/>
+            </svg>
+          </div>
+          <h1>together or alone</h1>
+          <p>rooms, duels, solo. your call every time.</p>
+        </div>
+      </div>
+
+      <div class="intro-dots">
+        <span class="dot active"></span><span class="dot"></span><span class="dot"></span>
+      </div>
+      <button id="intro-next" class="btn-primary">next</button>
+      <button id="intro-skip" class="btn-ghost">skip</button>
+    </div>
+  </section>
+
+  <section id="screen-auth" class="screen">
+    <div class="auth-wrap">
+      <div class="auth-kanji">改善</div>
+      <div class="auth-tabs">
+        <button class="tab active" data-tab="login">sign in</button>
+        <button class="tab" data-tab="register">create account</button>
+        <button class="tab" data-tab="guest">guest</button>
+      </div>
+
+      <form id="form-login" class="auth-form active">
+        <label>username or email<input type="text" id="login-id" autocomplete="username" required /></label>
+        <label>password<input type="password" id="login-pw" autocomplete="current-password" required /></label>
+        <div class="auth-error" id="login-err"></div>
+        <button type="submit" class="btn-primary">sign in</button>
+      </form>
+
+      <form id="form-register" class="auth-form">
+        <div class="mode-pick">
+          <label class="mode-option active"><input type="radio" name="mode" value="student" checked /><span>student</span><small>minimal, focused</small></label>
+          <label class="mode-option"><input type="radio" name="mode" value="gamer" /><span>gamer</span><small>ranks, dark</small></label>
+        </div>
+        <label>username<input type="text" id="reg-username" pattern="[a-zA-Z0-9_]{3,20}" required autocomplete="username" /><small id="reg-username-hint"></small></label>
+        <label>email<input type="email" id="reg-email" required autocomplete="email" /></label>
+        <label>password<input type="password" id="reg-pw" minlength="8" required autocomplete="new-password" /><span class="pw-meter"><span id="pw-bar"></span></span></label>
+        <div class="two-col">
+          <label>year
+            <select id="reg-year">
+              <option value="freshman">freshman</option>
+              <option value="sophomore">sophomore</option>
+              <option value="junior">junior</option>
+              <option value="senior">senior</option>
+            </select>
+          </label>
+          <label>school
+            <select id="reg-school">
+              <option value="SSE">sse</option>
+              <option value="SB">sb</option>
+              <option value="SHSS">shss</option>
+            </select>
+          </label>
+        </div>
+        <label>major<input type="text" id="reg-major" placeholder="e.g. CS, Finance" /></label>
+        <div class="auth-error" id="reg-err"></div>
+        <button type="submit" class="btn-primary">create account</button>
+      </form>
+
+      <div id="form-guest" class="auth-form">
+        <p class="guest-note">guest mode: xp vanishes when you close the tab. no rooms, no duels, no friends. sign up when you're ready.</p>
+        <button id="guest-go" class="btn-primary">continue as guest</button>
+      </div>
+    </div>
+  </section>
+
+  <nav id="nav" class="nav">
+    <button class="nav-btn active" data-go="home"><span class="nav-icon">·</span>home</button>
+    <button class="nav-btn" data-go="rooms"><span class="nav-icon">·</span>rooms</button>
+    <button class="nav-btn" data-go="friends"><span class="nav-icon">·</span>friends</button>
+    <button class="nav-btn" data-go="board"><span class="nav-icon">·</span>board</button>
+    <button class="nav-btn" data-go="settings"><span class="nav-icon">·</span>me</button>
+  </nav>
+
+  <section id="screen-home" class="screen">
+    <header class="home-header">
+      <div>
+        <div class="kanji-mark">改善</div>
+        <div class="brand-sub">continuous improvement</div>
+      </div>
+      <div class="home-stats-mini">
+        <div><span id="home-username">—</span></div>
+        <div><em id="home-streak">0</em> day streak</div>
+      </div>
+    </header>
+
+    <div class="home-grid">
+
+      <aside class="side-panel">
+        <div class="panel-label">today's quests</div>
+        <div class="daily-tasks" id="daily-tasks"></div>
+
+        <div class="panel-label" style="margin-top:1.5rem">your tasks</div>
+        <div class="todo-list" id="todo-list"></div>
+        <form id="todo-form" class="todo-add">
+          <input type="text" id="todo-input" placeholder="+ add task" maxlength="140" />
+        </form>
+        <div class="panel-note">
+          your tasks: 0 xp alone. complete one mid-session → +10 xp, max 3/day.
+        </div>
+      </aside>
+
+      <main class="home-main">
+        <div class="panel-label">choose your path</div>
+        <div class="path-cards">
+          <button class="path-card" data-action="solo">
+            <svg class="path-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="3.5"/><path d="M5 22 C5 17 8 15 12 15 C16 15 19 17 19 22"/></svg>
+            <div class="path-title">solo</div>
+            <div class="path-sub">pick a duration · commit or lose it all</div>
+            <div class="path-hint">→ start now</div>
+          </button>
+          <button class="path-card path-hero" data-action="rooms">
+            <svg class="path-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="3"/><circle cx="16" cy="8" r="3"/><path d="M2 20 C2 16 5 14 8 14 C11 14 14 16 14 20"/><path d="M10 20 C10 16 13 14 16 14 C19 14 22 16 22 20"/></svg>
+            <div class="path-title">rooms</div>
+            <div class="path-sub">study together · up to 20 · voice on break</div>
+            <div class="path-hint"><span id="rooms-open-count">0</span> open</div>
+          </button>
+          <button class="path-card" data-action="battle">
+            <svg class="path-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 6 L20 4 L20 10 Z M5 19 L16 8 M5 19 L3 21 M5 19 L7 21 M12 11 L14 9"/></svg>
+            <div class="path-title">duel</div>
+            <div class="path-sub">race a friend, winner takes xp</div>
+            <div class="path-hint">→ challenge</div>
+          </button>
+        </div>
+
+        <div class="stat-strip">
+          <div><span class="stat-label">today</span><span class="stat-val" id="stat-daily">0</span><span class="stat-unit">xp</span></div>
+          <div class="stat-div"></div>
+          <div><span class="stat-label">total</span><span class="stat-val" id="stat-total">0</span><span class="stat-unit">xp</span></div>
+          <div class="stat-div"></div>
+          <div><span class="stat-label">rank</span><span class="stat-val" id="stat-rank">—</span><span class="stat-unit"></span></div>
+          <div class="stat-div"></div>
+          <div><span class="stat-label">freezes</span><span class="stat-val" id="stat-freezes">0</span><span class="stat-unit"></span></div>
+        </div>
+      </main>
+    </div>
+  </section>
+
+  <section id="screen-rooms" class="screen">
+    <header class="sub-header">
+      <h2>rooms</h2>
+      <button id="btn-new-room" class="btn-ghost">+ new room</button>
+    </header>
+    <div class="rooms-list" id="rooms-list"></div>
+  </section>
+
+  <section id="screen-friends" class="screen">
+    <header class="sub-header">
+      <h2>friends</h2>
+    </header>
+    <div class="friend-search">
+      <input type="text" id="friend-search-input" placeholder="search by username or KZEN id" />
+    </div>
+    <div class="friend-results" id="friend-results"></div>
+    <div class="panel-label" style="margin: 2rem 0 1rem;">your friends</div>
+    <div class="friends-list" id="friends-list"></div>
+  </section>
+
+  <section id="screen-board" class="screen">
+    <header class="sub-header">
+      <h2>leaderboard</h2>
+    </header>
+    <div class="seg seg-wide">
+      <button class="seg-btn active" data-period="today">today</button>
+      <button class="seg-btn" data-period="week">week</button>
+      <button class="seg-btn" data-period="month">month</button>
+      <button class="seg-btn" data-period="all">all time</button>
+    </div>
+    <div class="board-list" id="board-list"></div>
+  </section>
+
+  <section id="screen-settings" class="screen">
+    <header class="sub-header">
+      <h2>settings</h2>
+    </header>
+
+    <div class="settings-tabs">
+      <button class="settings-tab active" data-panel="profile">profile</button>
+      <button class="settings-tab" data-panel="security">security</button>
+      <button class="settings-tab" data-panel="notif">notifications</button>
+      <button class="settings-tab" data-panel="friend-mgr">friends</button>
+      <button class="settings-tab" data-panel="appearance">appearance</button>
+    </div>
+
+    <div id="panel-profile" class="settings-panel active">
+      <div class="profile-card">
+        <div class="profile-top">
+          <div>
+            <div class="profile-username" id="prof-username">—</div>
+            <div class="profile-meta" id="prof-meta">—</div>
+          </div>
+          <div class="profile-id">
+            <span class="panel-label">kzen id</span>
+            <div class="id-row">
+              <code id="prof-kzen">—</code>
+              <button id="btn-copy-id" class="btn-ghost">copy</button>
+            </div>
+          </div>
+        </div>
+        <div class="profile-stats">
+          <div><em id="p-total">0</em><span>total xp</span></div>
+          <div><em id="p-streak">0</em><span>streak</span></div>
+          <div><em id="p-sessions">0</em><span>sessions</span></div>
+          <div><em id="p-battles">0</em><span>battles won</span></div>
+        </div>
+      </div>
+
+      <div class="profile-card">
+        <div class="panel-label">daily xp goal</div>
+        <div class="goal-row">
+          <input type="range" id="goal-range" min="30" max="300" step="10" value="60" />
+          <span id="goal-value">60 xp</span>
+        </div>
+        <div class="panel-note">hit this and your status flips to "done today"</div>
+      </div>
+
+      <div class="profile-card">
+        <div class="panel-label">status</div>
+        <div class="status-now">
+          currently: <em id="status-display">focus</em>
+          <label class="toggle"><input type="checkbox" id="auto-status-toggle" /><span>auto status (recommended)</span></label>
+        </div>
+        <div class="seg" style="margin-top:.75rem" id="manual-status-seg">
+          <button class="seg-btn status-btn active" data-status="focus">focus</button>
+          <button class="seg-btn status-btn" data-status="break">break</button>
+          <button class="seg-btn status-btn" data-status="done">done today</button>
+          <button class="seg-btn status-btn" data-status="away">away</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="panel-security" class="settings-panel">
+      <div class="profile-card">
+        <div class="panel-label">change password</div>
+        <form id="pw-form">
+          <label>current password<input type="password" id="pw-old" required autocomplete="current-password" /></label>
+          <label>new password<input type="password" id="pw-new" minlength="8" required autocomplete="new-password" /></label>
+          <label>confirm new password<input type="password" id="pw-confirm" minlength="8" required autocomplete="new-password" /></label>
+          <div class="auth-error" id="pw-err"></div>
+          <button type="submit" class="btn-primary">update password</button>
+        </form>
+      </div>
+
+      <div class="profile-card">
+        <div class="panel-label">account</div>
+        <div class="status-now">
+          email: <em id="sec-email">—</em>
+        </div>
+        <button id="btn-signout" class="btn-ghost" style="margin-top:1rem">sign out</button>
+      </div>
+    </div>
+
+    <div id="panel-notif" class="settings-panel">
+      <div class="profile-card">
+        <div class="panel-label">in-app notifications</div>
+        <label class="toggle"><input type="checkbox" id="notif-battles" checked /><span>duel invites</span></label>
+        <label class="toggle"><input type="checkbox" id="notif-friends" checked /><span>friend status changes</span></label>
+        <label class="toggle"><input type="checkbox" id="notif-rooms" checked /><span>room updates</span></label>
+        <label class="toggle"><input type="checkbox" id="notif-methods" checked /><span>study method prompts</span></label>
+      </div>
+    </div>
+
+    <div id="panel-friend-mgr" class="settings-panel">
+      <div class="profile-card">
+        <div class="panel-label">manage friends</div>
+        <div id="friend-mgr-list"></div>
+      </div>
+    </div>
+
+    <div id="panel-appearance" class="settings-panel">
+      <div class="profile-card">
+        <div class="panel-label">theme</div>
+        <div class="theme-row">
+          <button class="theme-swatch" data-theme="ink"    style="background:#0E0E0C"         title="ink"></button>
+          <button class="theme-swatch" data-theme="paper"  style="background:#F4F1EA"         title="paper"></button>
+          <button class="theme-swatch" data-theme="lime"   style="background:#C4E538"         title="neon lime"></button>
+          <button class="theme-swatch" data-theme="electric" style="background:#2979FF"       title="electric blue"></button>
+          <button class="theme-swatch" data-theme="sunrise" style="background:#FF7A3D"        title="sunrise"></button>
+        </div>
+        <div class="panel-note" style="margin-top:1rem">ink and paper are the calm defaults. lime, electric, sunrise are energy modes — opt in when you want kaizen to feel louder.</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="screen-solo-setup" class="screen">
+    <button class="focus-exit" data-go="home">← back</button>
+    <div class="solo-setup">
+      <div class="panel-label">solo commit</div>
+      <h2 style="margin:1rem 0">how long?</h2>
+      <div class="duration-picker">
+        <button class="dur-btn" data-dur="25">25 min</button>
+        <button class="dur-btn active" data-dur="50">50 min</button>
+        <button class="dur-btn" data-dur="90">90 min</button>
+        <button class="dur-btn" data-dur="120">120 min</button>
+      </div>
+      <div class="solo-warn">
+        <strong>commit rule:</strong> leave before time's up = <em>0 xp</em> for this session.
+        finish it = full xp + multiplier.
+      </div>
+      <label>what are you studying? <input id="solo-subject" type="text" placeholder="e.g. calc, cs" maxlength="30" /></label>
+      <button id="solo-start" class="btn-primary">start · keep word</button>
+    </div>
+  </section>
+
+  <section id="screen-focus" class="screen focus-screen">
+    <button id="focus-exit" class="focus-exit">← exit</button>
+    <div class="focus-inner">
+      <div class="focus-room-name" id="focus-room-name">solo</div>
+
+      <div class="phase-banner" id="phase-banner" style="display:none">
+        <span id="phase-label">focus phase</span> · voice <span id="phase-voice">locked</span>
+      </div>
+
+      <div class="focus-timer" id="focus-timer">00:00</div>
+
+      <div class="focus-commit" id="focus-commit" style="display:none">
+        committed: <em id="commit-target">25</em> min · <span id="commit-remaining">25:00</span> left
+      </div>
+
+      <div class="focus-multiplier">
+        <span class="panel-label">multiplier</span>
+        <span id="focus-mult">×1.0</span>
+      </div>
+      <div class="focus-xp">
+        <span class="panel-label">session xp</span>
+        <span id="focus-xp">0</span>
+      </div>
+
+      <div class="focus-method" id="focus-method" style="display:none">
+        <div class="method-label">study method</div>
+        <div class="method-title" id="method-title"></div>
+        <div class="method-desc" id="method-desc"></div>
+        <div class="method-actions">
+          <button id="method-done" class="btn-ghost">did it · +10</button>
+          <button id="method-skip" class="btn-ghost">skip</button>
+        </div>
+      </div>
+
+      <div class="focus-controls">
+        <button id="focus-camera" class="btn-ghost">camera: off</button>
+        <button id="focus-stop" class="btn-primary">stop</button>
+      </div>
+
+      <div class="focus-room-members" id="focus-room-members"></div>
+      <div class="peer-grid" id="peer-grid"></div>
+    </div>
+
+    <div class="cam-pip" id="cam-pip" style="display:none">
+      <video id="cam-video" autoplay muted playsinline></video>
+      <div class="cam-status" id="cam-status">focused</div>
+    </div>
+  </section>
+
+  <section id="screen-battle" class="screen">
+    <button id="battle-exit" class="focus-exit">← exit</button>
+    <div class="battle-inner">
+      <div class="battle-label">duel</div>
+      <div class="battle-timer" id="battle-timer">25:00</div>
+      <div class="battle-versus">
+        <div class="duel-side">
+          <div class="duel-name" id="duel-you">you</div>
+          <div class="duel-xp" id="duel-you-xp">0</div>
+          <div class="duel-bar"><div id="duel-you-bar"></div></div>
+        </div>
+        <div class="duel-vs">vs</div>
+        <div class="duel-side">
+          <div class="duel-name" id="duel-them">—</div>
+          <div class="duel-xp" id="duel-them-xp">0</div>
+          <div class="duel-bar"><div id="duel-them-bar"></div></div>
+        </div>
+      </div>
+      <div class="battle-controls">
+        <button id="battle-forfeit" class="btn-ghost">forfeit</button>
+      </div>
+    </div>
+  </section>
+
+  <div id="modal-room-preview" class="modal">
+    <div class="modal-card">
+      <h3 id="rp-name">room</h3>
+      <div class="preview-grid">
+        <div class="preview-row"><span>subject</span><em id="rp-subject">—</em></div>
+        <div class="preview-row"><span>session length</span><em id="rp-length">—</em></div>
+        <div class="preview-row"><span>time left</span><em id="rp-remaining">—</em></div>
+        <div class="preview-row"><span>voice cycle</span><em id="rp-cycle">—</em></div>
+        <div class="preview-row"><span>phase</span><em id="rp-phase">—</em></div>
+        <div class="preview-row"><span>people</span><em id="rp-members">—</em></div>
+        <div class="preview-row"><span>camera</span><em id="rp-camera">—</em></div>
+      </div>
+      <div class="room-commit-warn">
+        <strong>room rule:</strong> leave before the session ends = lose <em>half</em> the xp earned here.
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn-ghost" data-close="modal-room-preview">cancel</button>
+        <button type="button" id="rp-join" class="btn-primary">join room</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="modal-new-room" class="modal">
+    <div class="modal-card">
+      <h3>new room</h3>
+      <form id="new-room-form">
+        <label>name<input type="text" id="nr-name" maxlength="40" required /></label>
+        <label>subject
+          <select id="nr-subject">
+            <option>General</option><option>Calculus</option><option>Linear Algebra</option>
+            <option>Computer Science</option><option>Physics</option><option>Chemistry</option>
+            <option>Biology</option><option>Economics</option><option>Languages</option><option>Humanities</option>
+          </select>
+        </label>
+        <label>session length
+          <select id="nr-length">
+            <option value="25">25 min</option>
+            <option value="50" selected>50 min</option>
+            <option value="90">90 min</option>
+            <option value="120">120 min</option>
+          </select>
+        </label>
+        <label>voice cycle
+          <select id="nr-cycle">
+            <option value="25-5">25 focus · 5 voice</option>
+            <option value="50-10">50 focus · 10 voice</option>
+            <option value="120-30">120 focus · 30 voice</option>
+          </select>
+        </label>
+        <label>max people (2-20)<input type="number" id="nr-max" min="2" max="20" value="10" /></label>
+        <label class="toggle"><input type="checkbox" id="nr-cam" /><span>camera required</span></label>
+        <div class="auth-error" id="nr-err"></div>
+        <div class="modal-actions">
+          <button type="button" class="btn-ghost" data-close="modal-new-room">cancel</button>
+          <button type="submit" class="btn-primary">create</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="modal-battle-invite" class="modal">
+    <div class="modal-card">
+      <h3>duel invite</h3>
+      <p id="battle-invite-text">—</p>
+      <div class="modal-actions">
+        <button id="battle-decline" class="btn-ghost">decline</button>
+        <button id="battle-accept" class="btn-primary">accept</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="modal-challenge" class="modal">
+    <div class="modal-card">
+      <h3>challenge a friend</h3>
+      <form id="challenge-form">
+        <label>username or kzen id<input type="text" id="ch-target" required /></label>
+        <label>duration
+          <select id="ch-duration">
+            <option value="25">25 min</option>
+            <option value="50">50 min</option>
+            <option value="120">2 hours</option>
+          </select>
+        </label>
+        <div class="auth-error" id="ch-err"></div>
+        <div class="modal-actions">
+          <button type="button" class="btn-ghost" data-close="modal-challenge">cancel</button>
+          <button type="submit" class="btn-primary">send challenge</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="toast" class="toast"></div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

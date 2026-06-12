@@ -1,0 +1,20 @@
+{
+  "name": "kaizen-backend",
+  "version": "2.2.0",
+  "private": true,
+  "license": "UNLICENSED",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "serve-frontend": "node serve-frontend.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "express-rate-limit": "^7.4.0",
+    "helmet": "^7.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "ws": "^8.16.0"
+  }
+}
