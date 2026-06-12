@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Kiro — Stay In It</title>
+  <link rel="manifest" href="/manifest.json" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!--  SCREEN 1: ONBOARDING                     -->
+  <!-- ══════════════════════════════════════════ -->
+  <div id="screen-onboarding" class="screen active">
+    <div class="onboard-bg"></div>
+    <div class="onboard-card">
+      <div class="logo-block">
+        <span class="logo-mark">K</span>
+        <div>
+          <h1 class="logo-text">Kiro</h1>
+          <p class="logo-sub">Stay in it.</p>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">Your name</label>
+        <input id="inp-username" type="text" class="field-input" placeholder="e.g. aymen" maxlength="20" />
+      </div>
+
+      <div class="field-group">
+        <label class="field-label">Pick your vibe</label>
+        <div class="theme-grid">
+          <button class="theme-swatch active" data-theme="blue"   style="--sw:#3b82f6" title="Ocean Blue"></button>
+          <button class="theme-swatch"        data-theme="green"  style="--sw:#10b981" title="Forest"></button>
+          <button class="theme-swatch"        data-theme="orange" style="--sw:#f59e0b" title="Amber"></button>
+          <button class="theme-swatch"        data-theme="red"    style="--sw:#ef4444" title="Crimson"></button>
+          <button class="theme-swatch"        data-theme="purple" style="--sw:#8b5cf6" title="Lavender"></button>
+          <button class="theme-swatch"        data-theme="cozy"   style="--sw:#c4956a" title="Cozy"></button>
+        </div>
+      </div>
+
+      <div class="mode-toggle">
+        <button class="mode-btn active" id="mode-social" data-mode="social">
+          <span class="mode-icon">👥</span>
+          <span>Study Rooms</span>
+        </button>
+        <button class="mode-btn" id="mode-solo" data-mode="solo">
+          <span class="mode-icon">🌙</span>
+          <span>Solo Focus</span>
+        </button>
+      </div>
+
+      <button id="btn-start" class="btn-primary">Start Studying →</button>
+      <p class="onboard-note">No account needed. Your data stays on this device.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!--  SCREEN 2: ROOMS LIST                     -->
+  <!-- ══════════════════════════════════════════ -->
+  <div id="screen-rooms" class="screen">
+    <header class="top-bar">
+      <div class="top-left">
+        <button class="back-btn" onclick="goTo('onboarding')">←</button>
+        <span class="top-title">Rooms</span>
+      </div>
+      <div class="top-right">
+        <span class="user-pill" id="rooms-username"></span>
+        <button class="icon-btn" onclick="goTo('leaderboard')" title="Leaderboard">🏆</button>
+        <button class="icon-btn" onclick="goTo('profile')" title="Profile">👤</button>
+      </div>
+    </header>
+
+    <div class="live-banner">
+      <span class="live-dot"></span>
+      <span id="live-count">47 people studying right now</span>
+    </div>
+
+    <div class="rooms-grid" id="rooms-grid">
+      <!-- Rooms injected by JS -->
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!--  SCREEN 3: FOCUS / STUDY ROOM             -->
+  <!-- ══════════════════════════════════════════ -->
+  <div id="screen-focus" class="screen">
+    <header class="top-bar">
+      <div class="top-left">
+        <button class="back-btn" onclick="leaveRoom()">← Leave</button>
+        <span class="top-title" id="focus-room-name">Math</span>
+      </div>
+      <div class="top-right">
+        <span class="xp-chip" id="focus-xp-display">0 XP</span>
+      </div>
+    </header>
+
+    <div class="focus-main">
+      <!-- Timer block -->
+      <div class="timer-card">
+        <div class="timer-ring-wrap">
+          <svg class="timer-ring" viewBox="0 0 120 120">
+            <circle class="ring-bg" cx="60" cy="60" r="54"/>
+            <circle class="ring-fill" id="ring-fill" cx="60" cy="60" r="54"
+              stroke-dasharray="339.3"
+              stroke-dashoffset="339.3"/>
+          </svg>
+          <div class="timer-inner">
+            <span class="timer-display" id="timer-display">00:00</span>
+            <span class="timer-mult" id="timer-mult">1×</span>
+          </div>
+        </div>
+
+        <div class="xp-row">
+          <span class="xp-label">XP earned</span>
+          <span class="xp-value" id="xp-value">0</span>
+        </div>
+
+        <button id="focus-toggle" class="focus-toggle" onclick="toggleFocus()">
+          <span id="toggle-icon">▶</span>
+          <span id="toggle-label">Start Focusing</span>
+        </button>
+
+        <div class="status-row" id="status-row">
+          <span class="status-dot idle" id="status-dot"></span>
+          <span id="status-text">Press to start</span>
+        </div>
+      </div>
+
+      <!-- Users sidebar -->
+      <div class="users-panel">
+        <p class="panel-title">In this room</p>
+        <ul class="users-list" id="users-list">
+          <!-- Injected by JS -->
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!--  SCREEN 4: LEADERBOARD                    -->
+  <!-- ══════════════════════════════════════════ -->
+  <div id="screen-leaderboard" class="screen">
+    <header class="top-bar">
+      <div class="top-left">
+        <button class="back-btn" onclick="goTo('rooms')">←</button>
+        <span class="top-title">Leaderboard</span>
+      </div>
+      <div class="tab-row">
+        <button class="tab-btn active" id="tab-daily" onclick="switchTab('daily')">Daily</button>
+        <button class="tab-btn" id="tab-monthly" onclick="switchTab('monthly')">Monthly</button>
+      </div>
+    </header>
+
+    <div class="lb-container">
+      <div class="lb-list" id="lb-list">
+        <!-- Injected by JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!--  SCREEN 5: PROFILE                        -->
+  <!-- ══════════════════════════════════════════ -->
+  <div id="screen-profile" class="screen">
+    <header class="top-bar">
+      <div class="top-left">
+        <button class="back-btn" onclick="goTo('rooms')">←</button>
+        <span class="top-title">Profile</span>
+      </div>
+    </header>
+
+    <div class="profile-body">
+      <div class="avatar-ring">
+        <span class="avatar-letter" id="profile-letter">A</span>
+      </div>
+      <h2 class="profile-name" id="profile-name">Aymen</h2>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <span class="stat-val" id="stat-xp">0</span>
+          <span class="stat-lbl">Total XP</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-val" id="stat-streak">0🔥</span>
+          <span class="stat-lbl">Day Streak</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-val" id="stat-sessions">0</span>
+          <span class="stat-lbl">Sessions</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-val" id="stat-rank">#—</span>
+          <span class="stat-lbl">Rank</span>
+        </div>
+      </div>
+
+      <div class="theme-section">
+        <p class="section-label">Change theme</p>
+        <div class="theme-grid small">
+          <button class="theme-swatch" data-theme="blue"   style="--sw:#3b82f6"></button>
+          <button class="theme-swatch" data-theme="green"  style="--sw:#10b981"></button>
+          <button class="theme-swatch" data-theme="orange" style="--sw:#f59e0b"></button>
+          <button class="theme-swatch" data-theme="red"    style="--sw:#ef4444"></button>
+          <button class="theme-swatch" data-theme="purple" style="--sw:#8b5cf6"></button>
+          <button class="theme-swatch" data-theme="cozy"   style="--sw:#c4956a"></button>
+        </div>
+      </div>
+
+      <button class="btn-danger" onclick="resetProfile()">Reset Profile</button>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!--  SOLO MODE OVERLAY                        -->
+  <!-- ══════════════════════════════════════════ -->
+  <div id="screen-solo" class="screen solo-screen">
+    <header class="top-bar transparent">
+      <div class="top-left">
+        <button class="back-btn light" onclick="leaveSolo()">← Back</button>
+      </div>
+      <div class="top-right">
+        <span class="xp-chip" id="solo-xp-display">0 XP</span>
+      </div>
+    </header>
+
+    <div class="solo-main">
+      <div class="solo-ambient" id="solo-ambient"></div>
+      <div class="solo-content">
+        <p class="solo-greeting" id="solo-greeting">Ready when you are.</p>
+
+        <div class="solo-timer-wrap">
+          <span class="solo-timer" id="solo-timer">00:00</span>
+          <span class="solo-mult" id="solo-mult">1×</span>
+        </div>
+
+        <button id="solo-toggle" class="solo-btn" onclick="toggleSolo()">
+          <span id="solo-icon">▶</span>
+          <span id="solo-label">Start Session</span>
+        </button>
+
+        <div class="solo-xp-row">
+          <span>XP this session:</span>
+          <strong id="solo-xp">0</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/app.js"></script>
+</body>
+</html>
